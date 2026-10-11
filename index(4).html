@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="Miojo, miojo, miojo! Um site feito para quem ama macarrão instantâneo.">
+  <title>Miojo — Miojo, miojo, miojo!</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap');
+
+:root{--bg:#101010;--panel:#181818;--paper:#f7f4ed;--ink:#151515;--yellow:#ffd21c;--red:#f52235;--muted:#bdbdbd;--line:rgba(255,255,255,.13)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:#fff;font-family:Nunito,Arial,sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+.topbar{height:76px;padding:0 max(calc((100% - 1160px)/2),5%);display:flex;align-items:center;justify-content:space-between;gap:28px;border-bottom:1px solid var(--line);background:rgba(12,12,12,.94);position:sticky;top:0;z-index:10;backdrop-filter:blur(14px)}
+.logo{font-family:Rubik,sans-serif;font-weight:900;font-size:29px;font-style:italic;letter-spacing:-1.5px;color:#fff;white-space:nowrap}.logo-icon{font-style:normal}.logo-dot{color:var(--yellow)}
+.nav{display:flex;align-items:center;gap:28px}.nav a{font-weight:800;font-size:14px;color:#dedede;transition:color .2s}.nav a:hover,.nav a.active{color:var(--yellow)}
+.top-cta{background:var(--red);padding:11px 17px;border-radius:30px;font-size:13px;font-weight:900;white-space:nowrap;transition:transform .2s}.top-cta:hover,.button:hover{transform:translateY(-2px)}
+.menu-toggle{display:none;border:0;background:none;color:#fff;font-size:25px}
+.hero{max-width:1160px;margin:auto;min-height:460px;padding:55px 20px 48px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:30px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(245,34,53,.15),transparent 68%);right:5%;top:0;pointer-events:none}
+.eyebrow{color:var(--red);font-size:12px;letter-spacing:2px;font-weight:900;margin:0 0 12px}
+h1,h2,h3,p{margin-top:0}
+h1{font-family:Rubik,sans-serif;font-size:clamp(35px,4.3vw,57px);line-height:1.07;letter-spacing:-2px;margin-bottom:20px;font-weight:900}
+h1 span{color:var(--yellow)}
+.hero-text{max-width:510px;color:#d6d6d6;font-size:17px;margin-bottom:24px}.hero-text strong{color:#fff}
+.hero-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.button{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:12px;padding:14px 20px;font-weight:900;transition:transform .2s,box-shadow .2s}.button-yellow{background:var(--yellow);color:#171717;box-shadow:0 7px 0 #b98f00}.button-dark{background:#171717;color:#fff;border:1px solid #333}
+.text-link{font-size:13px;font-weight:800;color:#ddd}.text-link span{color:var(--yellow);font-size:19px;margin-left:5px}
+.hero-note{margin-top:27px;font-size:12px;color:#c5c5c5}.hero-note span{color:var(--yellow);letter-spacing:3px;font-size:15px}.disclaimer{display:block;color:#777;font-size:10px;margin-top:3px}
+.hero-art{height:340px;position:relative;display:flex;align-items:center;justify-content:center}
+.bowl{width:min(350px,85%);height:230px;background:linear-gradient(145deg,#fefefe 0%,#c9c9c9 15%,#fff 35%,#a9a9a9 100%);border-radius:50% 50% 43% 43%/27% 27% 70% 70%;position:absolute;bottom:25px;box-shadow:inset 0 -18px 25px #777,0 24px 28px #0009;transform:perspective(350px) rotateX(-4deg);overflow:hidden;border:5px solid #ddd}
+.bowl:before{content:"";position:absolute;left:-2%;top:-2%;width:104%;height:85px;background:radial-gradient(ellipse at center,#f5c75b 0%,#d99b2e 48%,#f6f0d8 50%,#777 65%,#eee 70%);border-radius:50%;border:5px solid #e9e9e9;box-shadow:inset 0 4px 10px #8a511b}
+.noodles{position:absolute;top:5px;left:18%;width:64%;z-index:1;color:#a76a0c;text-align:center;font-size:26px;line-height:1.2;letter-spacing:2px;text-shadow:1px 2px #ffec9c}
+.bowl-label{position:absolute;z-index:2;top:95px;left:0;right:0;text-align:center;background:var(--red);color:white;font-family:Rubik,sans-serif;font-size:34px;font-style:italic;font-weight:900;line-height:1.02;padding:10px 0 12px;transform:rotate(-2deg);text-shadow:2px 3px #8b0614;border-top:3px solid #ff9b9b;border-bottom:3px solid #a90b1a}.bowl-label small{font-size:9px;letter-spacing:3px;text-shadow:none}
+.steam{position:absolute;top:10px;width:17px;height:72px;border-left:3px solid #bdbdbd;border-radius:50%;opacity:.5;filter:blur(1px);transform:rotate(13deg)}.steam-one{left:43%}.steam-two{left:51%;top:0;height:86px}.steam-three{left:59%;top:20px;height:60px}
+.chopstick{position:absolute;width:160px;height:7px;background:linear-gradient(#f8d078,#8d4a16);right:0;top:95px;border-radius:10px;transform:rotate(-29deg);box-shadow:0 4px 8px #0007}.stick-two{top:110px;right:8px;transform:rotate(-24deg)}
+.spark{position:absolute;color:var(--yellow);font-size:44px}.spark-one{top:42px;left:11%}.spark-two{bottom:35px;right:8%;font-size:34px}.art-caption{position:absolute;right:0;top:50px;font-family:Rubik,sans-serif;font-size:20px;line-height:1.05;font-style:italic;transform:rotate(8deg);color:#fff}.art-caption b{color:var(--yellow);font-size:27px}
+.benefits{max-width:1160px;margin:0 auto 65px;padding:22px 10px;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #333;border-radius:17px;background:linear-gradient(120deg,#141414,#0c0c0c);box-shadow:0 15px 40px #0003}
+.benefits article{display:flex;align-items:center;justify-content:center;gap:14px;padding:5px 18px;border-right:1px solid #393939}.benefits article:last-child{border:0}.benefit-icon{color:var(--red);font-size:37px;line-height:1}.benefits h3{font-size:16px;margin:0 0 3px}.benefits p{font-size:12px;color:#bdbdbd;margin:0;max-width:150px}
+.content-section,.flavors-section,.prep-section,.curiosities{padding:76px max(calc((100% - 1080px)/2),6%)}
+.content-section{background:var(--paper);color:var(--ink)}
+.section-heading{max-width:650px;margin-bottom:35px}.section-heading h2,.prep-copy h2,.curiosity-copy h2{font-family:Rubik,sans-serif;font-size:clamp(30px,4vw,43px);line-height:1.12;letter-spacing:-1.5px;margin:0 0 13px;font-weight:900}.section-heading h2 span,.prep-copy h2 span,.curiosity-copy h2 span{color:var(--red)}.section-heading>p:last-child{color:#666;margin-bottom:0}
+.about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:45px;align-items:center}.mascot-card{min-height:210px;background:var(--yellow);border-radius:22px;color:#171717;display:flex;align-items:center;justify-content:center;gap:15px;padding:25px;transform:rotate(-2deg);box-shadow:8px 8px 0 #e5d9bd}.mascot{font-size:82px;filter:drop-shadow(0 7px 2px #0002)}.mascot-card div:last-child{font-size:19px;line-height:1.3}.about-copy h3{font-family:Rubik,sans-serif;font-size:24px;margin-bottom:8px}.about-copy p{color:#555}.about-copy .button{margin-top:6px}
+.flavors-section{background:#fff;color:var(--ink)}.centered{text-align:center;margin:0 auto 30px}.centered .eyebrow{margin-bottom:10px}
+.flavor-tools{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:23px}.search-box{display:flex;align-items:center;gap:8px;border:1px solid #ddd;border-radius:12px;padding:9px 13px;color:#777;min-width:220px}.search-box input{border:0;outline:0;width:100%;background:transparent;color:#171717;font-size:13px}.filter-buttons{display:flex;gap:8px;flex-wrap:wrap}.filter{border:1px solid #ddd;border-radius:30px;padding:8px 14px;background:#fff;color:#555;font-weight:800;font-size:12px}.filter.active,.filter:hover{background:var(--red);border-color:var(--red);color:#fff}
+.flavor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.flavor-card{padding:19px 17px 16px;text-align:center;border:1px solid #e7e3dc;border-radius:17px;background:#fffaf3;transition:transform .2s,box-shadow .2s}.flavor-card:hover{transform:translateY(-5px);box-shadow:0 13px 25px #0000000e}.packet{height:112px;max-width:190px;margin:0 auto 12px;border-radius:8px;border:3px solid #ffffff9c;box-shadow:0 7px 0 #00000013,inset 0 0 0 2px #ffffff50;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:Rubik,sans-serif;font-size:28px;font-style:italic;font-weight:900;text-shadow:2px 2px #0005;transform:rotate(-2deg);position:relative;overflow:hidden}.packet:before,.packet:after{content:"";position:absolute;left:0;right:0;height:7px;background:#ffffff60}.packet:before{top:5px}.packet:after{bottom:5px}.packet small{font-size:12px;font-style:normal;letter-spacing:2px}.packet span{font-size:21px;color:#ffdf7a;letter-spacing:-2px}.packet-red{background:linear-gradient(120deg,#a90d1a,#ff3042,#bd0015)}.packet-yellow{background:linear-gradient(120deg,#d99400,#ffe238,#df9c00)}.packet-green{background:linear-gradient(120deg,#08793b,#18b65c,#006c35)}.packet-brown{background:linear-gradient(120deg,#4a2111,#a35a2c,#381609)}.packet-orange{background:linear-gradient(120deg,#d74a08,#ff8b18,#c93c00)}.packet-purple{background:linear-gradient(120deg,#5b2799,#a354d8,#53228a)}.flavor-card h3{margin:0 0 4px;font-size:17px}.flavor-card p{font-size:12px;color:#777;margin:0 0 14px}.vote-button{border:1px solid #e8d9d9;border-radius:30px;padding:8px 13px;background:#fff;color:#444;font-weight:800;font-size:11px}.vote-button:hover,.vote-button.voted{background:#fff0f1;color:var(--red);border-color:#ffb9c0}.no-results,.vote-status{text-align:center;color:#777;font-size:13px;margin:20px 0 0}
+.prep-section{background:#171717;display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}.prep-copy h2{margin-bottom:15px}.prep-copy>p:not(.eyebrow){color:#bdbdbd}.steps{list-style:none;padding:0;margin:25px 0}.steps li{display:flex;align-items:flex-start;gap:12px;margin:13px 0;color:#e5e5e5;font-size:14px}.steps li span{flex:0 0 28px;height:28px;border-radius:50%;background:var(--yellow);color:#171717;display:grid;place-items:center;font-weight:900}.safety-note{font-size:12px;color:#ffcf66!important}
+.prep-visual{min-height:330px;border-radius:25px;background:radial-gradient(circle at 50% 30%,#3a2420,#201514 48%,#101010);border:1px solid #44302b;position:relative;display:grid;place-items:center;overflow:hidden}.big-bowl{font-size:150px;filter:drop-shadow(0 18px 10px #0008);animation:bob 3s ease-in-out infinite}.prep-sticker{position:absolute;top:24px;right:20px;transform:rotate(10deg);background:var(--yellow);color:#161616;border-radius:50%;width:94px;height:94px;display:grid;place-content:center;text-align:center;font-weight:900;line-height:1.05;font-size:14px}.prep-sticker span{color:var(--red)}.timer{position:absolute;bottom:18px;left:18px;right:18px;display:flex;align-items:center;gap:12px;background:#080808df;border:1px solid #444;border-radius:14px;padding:11px 13px}.timer>span{font-size:26px}.timer strong{display:flex;flex-direction:column;line-height:1.1;flex:1}.timer strong b{font-size:22px;color:var(--yellow);font-family:Rubik,sans-serif}.timer small{font-size:9px;letter-spacing:1px;color:#aaa}.timer button{border:0;background:var(--red);color:#fff;font-size:11px;font-weight:900;padding:9px 11px;border-radius:8px}
+.curiosities{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center;background:var(--paper);color:#171717}.curiosity-copy h2{font-size:35px}.curiosity-copy>p:not(.eyebrow){color:#555}.quote{font-family:Rubik,sans-serif;font-weight:700;font-style:italic;font-size:19px;color:#1b1b1b!important;border-left:4px solid var(--yellow);padding-left:16px;margin-top:25px}
+.miojo-counter{background:var(--yellow);border-radius:22px;padding:25px;color:#171717;text-align:center;box-shadow:8px 8px 0 #e5d9bd}.counter-emoji{font-size:40px}.miojo-counter p{font-weight:900;margin:5px 0}.counter-number{font-family:Rubik,sans-serif;font-size:55px;font-weight:900;line-height:1.2}.counter-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.counter-actions button{border:0;border-radius:9px;padding:9px 12px;background:#171717;color:#fff;font-size:12px;font-weight:900}.counter-actions button:first-child{font-size:18px;padding:5px 13px}.counter-actions button:last-child{background:transparent;color:#171717;border:1px solid #17171766}.miojo-counter small{display:block;margin-top:12px;font-size:10px;color:#554700}
+.footer{display:flex;align-items:center;gap:25px;flex-wrap:wrap;padding:28px max(calc((100% - 1080px)/2),6%);border-top:1px solid #333;background:#0a0a0a}.footer .logo{font-size:23px}.footer p{font-size:12px;color:#aaa;margin:0;flex:1}.back-top{font-size:12px;font-weight:800;color:var(--yellow)}.footer>small{flex-basis:100%;color:#696969;font-size:10px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--yellow);color:#171717;padding:12px 18px;border-radius:12px;font-weight:900;font-size:13px;box-shadow:0 8px 25px #0005;transition:.25s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+@media(max-width:900px){.topbar{padding:0 5%;gap:15px}.nav{gap:14px}.nav a{font-size:12px}.top-cta{font-size:11px;padding:9px 12px}.hero{padding-top:40px;grid-template-columns:1fr 1fr}.hero-art{transform:scale(.9)}.benefits{margin-left:5%;margin-right:5%;grid-template-columns:repeat(2,1fr)}.benefits article:nth-child(2){border-right:0}.benefits article:nth-child(-n+2){border-bottom:1px solid #393939;padding-bottom:16px}.benefits article:nth-child(n+3){padding-top:16px}.content-section,.flavors-section,.prep-section,.curiosities{padding:60px 6%}.prep-section{gap:25px}}
+@media(max-width:650px){.topbar{height:66px}.logo{font-size:25px}.menu-toggle{display:block;margin-left:auto}.top-cta{display:none}.nav{display:none;position:absolute;top:65px;left:0;right:0;background:#111;border-bottom:1px solid #333;padding:15px 6% 20px;flex-direction:column;align-items:stretch;gap:0}.nav.open{display:flex}.nav a{padding:12px 0;font-size:14px;border-bottom:1px solid #242424}.nav a:last-child{border:0}.hero{display:flex;flex-direction:column;align-items:stretch;padding:42px 6% 30px;gap:0}.hero-copy{position:relative;z-index:1}.hero h1{font-size:clamp(34px,9vw,48px);letter-spacing:-1.5px}.hero-text{font-size:15px}.hero-art{height:300px;margin-top:10px;transform:none}.bowl{width:290px;height:205px;bottom:18px}.bowl-label{top:84px;font-size:30px}.noodles{font-size:23px}.art-caption{right:4px;top:30px}.benefits{margin-bottom:25px;padding:14px 4%;gap:0}.benefits article{justify-content:flex-start;padding:13px 8px;gap:10px}.benefit-icon{font-size:29px}.benefits h3{font-size:14px}.benefits p{font-size:11px}.content-section,.flavors-section,.prep-section,.curiosities{padding:48px 6%}.about-grid,.prep-section,.curiosities{grid-template-columns:1fr;gap:28px}.mascot-card{min-height:160px}.mascot{font-size:65px}.flavor-tools{align-items:stretch;flex-direction:column}.search-box{width:100%}.filter-buttons{justify-content:center}.flavor-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.flavor-card{padding:14px 10px}.packet{height:95px;font-size:24px}.packet small{font-size:10px}.flavor-card h3{font-size:15px}.flavor-card p{font-size:11px}.vote-button{font-size:10px;padding:7px 8px}.prep-visual{min-height:300px}.curiosity-copy h2{font-size:31px}.footer{padding:25px 6%;gap:14px}.footer p{flex-basis:100%;order:3}.footer>small{order:4}.back-top{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+  </style>
+
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="#inicio" aria-label="Miojo, início"><span class="logo-icon">🍜</span> Miojo<span class="logo-dot">!</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <nav class="nav" id="nav">
+      <a class="active" href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#sabores">Sabores</a>
+      <a href="#preparo">Preparo</a>
+      <a href="#curiosidades">Curiosidades</a>
+    </nav>
+    <a class="top-cta" href="#sabores">🍜 Miojo é vida</a>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow">O TEMPERO DA FELICIDADE</p>
+        <h1>MIOJO MIOJO MIOJO<br><span>MAIAS MIOJO DA IGUAL A MIOJO</span></h1>
+        <p class="hero-text">Sim, é só um miojo. Mas é <strong>o melhor miojo</strong>. Rápido, prático, gostoso e ainda te faz feliz.</p>
+        <div class="hero-actions">
+          <a class="button button-yellow" href="#sabores">🍜 Quero um miojo agora!</a>
+          <a class="text-link" href="#sobre">Entenda essa paixão <span>↘</span></a>
+        </div>
+        <div class="hero-note"><span>★★★★★</span> 100% miojo, 0% arrependimento*</div>
+        <small class="disclaimer">*Arrependimento pode aparecer quando acaba o pacote.</small>
+      </div>
+      <div class="hero-art" aria-label="Ilustração de uma tigela de miojo">
+        <div class="steam steam-one"></div><div class="steam steam-two"></div><div class="steam steam-three"></div>
+        <div class="spark spark-one">✦</div><div class="spark spark-two">✧</div>
+        <div class="bowl"><div class="noodles">〰 〰 〰<br>〰 🍥 〰<br> 〰 〰</div><div class="bowl-label">MIOJO<br><small>O REI DA FOME</small></div></div>
+        <div class="chopstick stick-one"></div><div class="chopstick stick-two"></div>
+        <div class="art-caption">Miojo é<br><b>vida!</b></div>
+      </div>
+    </section>
+
+    <section class="benefits" aria-label="Vantagens do miojo">
+      <article><span class="benefit-icon">ϟ</span><div><h3>Rápido</h3><p>Fica pronto em poucos minutos.</p></div></article>
+      <article><span class="benefit-icon">♡</span><div><h3>Gostoso</h3><p>O sabor que você já conhece.</p></div></article>
+      <article><span class="benefit-icon">＄</span><div><h3>Econômico</h3><p>Pequeno no preço, gigante na fome.</p></div></article>
+      <article><span class="benefit-icon">☺</span><div><h3>Prático</h3><p>Uma panela e já era.</p></div></article>
+    </section>
+
+    <section class="content-section" id="sobre">
+      <div class="section-heading">
+        <p class="eyebrow">UMA HISTÓRIA DE AMOR</p>
+        <h2>O que é <span>miojo?</span></h2>
+        <p>É aquele macarrão instantâneo que chega quando a fome bate e a paciência sai correndo.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card mascot-card">
+          <div class="mascot">🍜</div>
+          <div><strong>Pequeno pacote.</strong><br>Grandes momentos.</div>
+        </div>
+        <div class="about-copy">
+          <h3>Simples assim.</h3>
+          <p>Água quente, macarrão, tempero e alguns minutinhos. O resultado? Uma refeição simples que virou tradição de muita gente.</p>
+          <p>Mas ó: variar com legumes, ovo ou outras coisinhas pode deixar seu prato mais completo.</p>
+          <a class="button button-dark" href="#preparo">Ver como preparar <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="flavors-section" id="sabores">
+      <div class="section-heading centered">
+        <p class="eyebrow">ESCOLHA SEU CAMPEÃO</p>
+        <h2>Sabores <span>lendários</span></h2>
+        <p>Todo sabor tem seu fã. Qual é o seu?</p>
+      </div>
+      <div class="flavor-tools">
+        <label class="search-box">⌕ <input id="flavorSearch" type="search" placeholder="Buscar sabor..." aria-label="Buscar sabor"></label>
+        <div class="filter-buttons" role="group" aria-label="Filtrar sabores">
+          <button class="filter active" data-filter="todos">Todos</button>
+          <button class="filter" data-filter="classico">Clássicos</button>
+          <button class="filter" data-filter="diferente">Diferentões</button>
+        </div>
+      </div>
+      <div class="flavor-grid" id="flavorGrid">
+        <article class="flavor-card" data-category="classico" data-name="carne"><div class="packet packet-red">Miojo<small>CARNE</small><span>〰〰</span></div><h3>Carne</h3><p>O clássico que nunca falha.</p><button class="vote-button" data-flavor="Carne">♡ Meu favorito</button></article>
+        <article class="flavor-card" data-category="classico" data-name="galinha"><div class="packet packet-yellow">Miojo<small>GALINHA</small><span>〰〰</span></div><h3>Galinha</h3><p>Sabor de casa e nostalgia.</p><button class="vote-button" data-flavor="Galinha">♡ Meu favorito</button></article>
+        <article class="flavor-card" data-category="classico" data-name="legumes"><div class="packet packet-green">Miojo<small>LEGUMES</small><span>〰〰</span></div><h3>Legumes</h3><p>Leve, colorido e cheio de sabor.</p><button class="vote-button" data-flavor="Legumes">♡ Meu favorito</button></article>
+        <article class="flavor-card" data-category="diferente" data-name="picanha"><div class="packet packet-brown">Miojo<small>PICANHA</small><span>〰〰</span></div><h3>Picanha</h3><p>Pra quem quer variar o rolê.</p><button class="vote-button" data-flavor="Picanha">♡ Meu favorito</button></article>
+        <article class="flavor-card" data-category="diferente" data-name="tomate"><div class="packet packet-orange">Miojo<small>TOMATE</small><span>〰〰</span></div><h3>Tomate</h3><p>Um toque diferente no prato.</p><button class="vote-button" data-flavor="Tomate">♡ Meu favorito</button></article>
+        <article class="flavor-card" data-category="diferente" data-name="queijo"><div class="packet packet-purple">Miojo<small>QUEIJO</small><span>〰〰</span></div><h3>Queijo</h3><p>Pra quem gosta de cremosidade.</p><button class="vote-button" data-flavor="Queijo">♡ Meu favorito</button></article>
+      </div>
+      <p class="no-results" id="noResults" hidden>Nenhum sabor encontrado. Só se procurar miojo mesmo. 🍜</p>
+      <p class="vote-status" id="voteStatus" aria-live="polite">Escolha seu sabor favorito!</p>
+    </section>
+
+    <section class="prep-section" id="preparo">
+      <div class="prep-copy">
+        <p class="eyebrow">GUIA DEFINITIVO</p>
+        <h2>Como preparar<br><span>essa obra-prima</span></h2>
+        <p>Uma receita tão simples que quase dá pra fazer de olhos fechados. Quase, hein.</p>
+        <ol class="steps">
+          <li><span>1</span> Ferva a quantidade de água indicada na embalagem.</li>
+          <li><span>2</span> Coloque o macarrão na água quente.</li>
+          <li><span>3</span> Cozinhe pelo tempo indicado, mexendo de vez em quando.</li>
+          <li><span>4</span> Adicione o tempero e misture bem.</li>
+          <li><span>5</span> Espere esfriar um pouquinho e aproveite!</li>
+        </ol>
+        <p class="safety-note">⚠️ Cuidado com a água e o vapor quentes. Se precisar, peça ajuda a um adulto.</p>
+      </div>
+      <div class="prep-visual"><div class="big-bowl">🍜</div><div class="prep-sticker">FÁCIL<br><span>DEMAIS!</span></div><div class="timer"><span>⏱</span><strong><b id="timerValue">03:00</b><small>MINUTINHOS</small></strong><button id="timerButton">Começar timer</button></div></div>
+    </section>
+
+    <section class="curiosities" id="curiosidades">
+      <div class="curiosity-copy"><p class="eyebrow">VOCÊ SABIA?</p><h2>Curiosidades <span>de respeito</span></h2><p>O macarrão instantâneo foi desenvolvido no Japão por Momofuku Ando e lançado em 1958. De lá pra cá, conquistou cozinhas e dormitórios pelo mundo.</p><p class="quote">“A vida é muito curta pra não colocar um temperinho.”</p></div>
+      <div class="miojo-counter"><span class="counter-emoji">🍜</span><p>Quantos miojos você já comeu?</p><div class="counter-number" id="counterNumber">0</div><div class="counter-actions"><button id="minusCount" aria-label="Diminuir contador">−</button><button id="plusCount">Já comi mais um! +1</button><button id="resetCount">Zerar</button></div><small>Contador totalmente científico (confia).</small></div>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="logo" href="#inicio">🍜 Miojo<span class="logo-dot">!</span></a><p>Miojo, miojo, miojo. Mais miojo da igual a miojo.</p><a href="#inicio" class="back-top">Voltar ao topo ↑</a><small>Feito com fome e carinho. Este é um site de fã, sem vínculo oficial com marcas.</small></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+(() => {
+  function whenReady(callback) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", callback, { once: true });
+    } else {
+      callback();
+    }
+  }
+
+  whenReady(() => {
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    const toast = $("#toast");
+    let toastTimeout;
+    function showToast(message) {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+    // Menu mobile
+    const menuToggle = $("#menuToggle");
+    const nav = $("#nav");
+    if (menuToggle && nav) {
+      menuToggle.addEventListener("click", () => {
+        const open = nav.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.textContent = open ? "✕" : "☰";
+      });
+      nav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.textContent = "☰";
+          nav.querySelectorAll("a").forEach((item) => item.classList.remove("active"));
+          link.classList.add("active");
+        });
+      });
+    }
+
+    // Pesquisa e filtros dos sabores
+    const flavorSearch = $("#flavorSearch");
+    const flavorCards = $$(".flavor-card");
+    const noResults = $("#noResults");
+    let activeFilter = "todos";
+    function filterFlavors() {
+      const query = flavorSearch ? flavorSearch.value.trim().toLocaleLowerCase("pt-BR") : "";
+      let visible = 0;
+      flavorCards.forEach((card) => {
+        const matchesName = (card.dataset.name || "").toLocaleLowerCase("pt-BR").includes(query);
+        const matchesCategory = activeFilter === "todos" || card.dataset.category === activeFilter;
+        card.hidden = !(matchesName && matchesCategory);
+        if (!card.hidden) visible++;
+      });
+      if (noResults) noResults.hidden = visible !== 0;
+    }
+    if (flavorSearch) flavorSearch.addEventListener("input", filterFlavors);
+    $$(".filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter || "todos";
+        $$(".filter").forEach((item) => item.classList.toggle("active", item === button));
+        filterFlavors();
+      });
+    });
+
+    // Escolha de sabor favorito
+    $$(".vote-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        $$(".vote-button").forEach((item) => {
+          item.classList.remove("voted");
+          item.textContent = "♡ Meu favorito";
+        });
+        button.classList.add("voted");
+        button.textContent = "♥ É esse!";
+        const status = $("#voteStatus");
+        if (status) status.textContent = `Seu sabor favorito é ${button.dataset.flavor || "esse"}. Escolha de respeito!`;
+        showToast(`${button.dataset.flavor || "Miojo"}: sabor campeão! 🍜`);
+      });
+    });
+
+    // Contador de miojos: salva o número neste navegador
+    const counterNumber = $("#counterNumber");
+    const plusCount = $("#plusCount");
+    const minusCount = $("#minusCount");
+    const resetCount = $("#resetCount");
+    let count = 0;
+    try {
+      count = Math.max(0, Number.parseInt(localStorage.getItem("miojoCount") || "0", 10) || 0);
+    } catch (_) {
+      count = 0;
+    }
+    function renderCount() {
+      if (counterNumber) counterNumber.textContent = String(count);
+      try { localStorage.setItem("miojoCount", String(count)); } catch (_) {}
+    }
+    if (counterNumber) renderCount();
+    if (plusCount) plusCount.addEventListener("click", () => {
+      count += 1;
+      renderCount();
+      showToast(count === 1 ? "O primeiro de muitos! 🍜" : "Miojo contabilizado com sucesso!");
+    });
+    if (minusCount) minusCount.addEventListener("click", () => {
+      count = Math.max(0, count - 1);
+      renderCount();
+    });
+    if (resetCount) resetCount.addEventListener("click", () => {
+      count = 0;
+      renderCount();
+      showToast("Contador zerado. Hora de recomeçar.");
+    });
+
+    // Timer de três minutos
+    const timerValue = $("#timerValue");
+    const timerButton = $("#timerButton");
+    let secondsLeft = 180;
+    let timerInterval = null;
+    function renderTimer() {
+      if (!timerValue) return;
+      const minutes = Math.floor(secondsLeft / 60).toString().padStart(2, "0");
+      const seconds = (secondsLeft % 60).toString().padStart(2, "0");
+      timerValue.textContent = `${minutes}:${seconds}`;
+    }
+    function stopTimer() {
+      if (timerInterval !== null) clearInterval(timerInterval);
+      timerInterval = null;
+    }
+    if (timerValue) renderTimer();
+    if (timerButton) timerButton.addEventListener("click", () => {
+      if (timerInterval !== null) {
+        stopTimer();
+        timerButton.textContent = "Continuar timer";
+        return;
+      }
+      if (secondsLeft <= 0) secondsLeft = 180;
+      timerButton.textContent = "Pausar";
+      timerInterval = setInterval(() => {
+        secondsLeft = Math.max(0, secondsLeft - 1);
+        renderTimer();
+        if (secondsLeft === 0) {
+          stopTimer();
+          timerButton.textContent = "Começar de novo";
+          showToast("Tempo encerrado! Confira se o miojo está pronto. 🍜");
+        }
+      }, 1000);
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
